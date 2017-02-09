@@ -1,0 +1,8 @@
+# Mac tmp files
+.DS_Store
+
+# Npm debug log
+npm-debug.log
+
+# Directory with all npm modules
+node_modules

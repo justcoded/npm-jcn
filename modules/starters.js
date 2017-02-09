@@ -56,7 +56,7 @@ module.exports = function() {
   function commands(info) {
     console.log(info);
     info.type = {
-        repo: 'https://jc_vlysytsia@bitbucket.org/justcoded/npm_jcn_markup_starter.git',
+        repo: 'https://github.com/justcoded/web-starter-kit.git',
         branch: 'master',
         exec: function() {
           console.log('Installing Npm and Bower dependencies'.info);

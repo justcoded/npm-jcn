@@ -1,6 +1,6 @@
 {
   "name": "jcn",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "description": "JustCoded command line tool",
   "preferGlobl": true,
   "bin": {

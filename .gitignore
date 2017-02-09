@@ -6,3 +6,4 @@ npm-debug.log
 
 # Directory with all npm modules
 node_modules
+.idea

@@ -34,7 +34,7 @@ If you find yourself running into issues during installation or running the tool
 
 ## Contributing
 
-Contributions, questions and comments are all welcome and encouraged. For code contributions to Web Starter Kit, please see our [Contribution guide](CONTRIBUTING.md) before submitting a pull request. [Website](https://github.com/justcoded/jcn) related issues should be filed on the [Web Fundamentals](https://github.com/justcoded/jcn/issues) issue tracker.
+Contributions, questions and comments are all welcome and encouraged. For code contributions to JCN Cli, please see our [Contribution guide](CONTRIBUTING.md) before submitting a pull request. [Website](https://github.com/justcoded/jcn) related issues should be filed on the [Web Fundamentals](https://github.com/justcoded/jcn/issues) issue tracker.
 
 ## License
 

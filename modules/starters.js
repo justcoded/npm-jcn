@@ -71,6 +71,28 @@ function moveFiles() {
   });
 }
 
+function init(repo) {
+  createTmpFolder().then(
+    () => {
+      console.log('\nGetting starter files... ' + emoji.get('runner'));
+      gitClone(repo).then(
+        () => {
+          moveFiles().then(
+            () => {
+              installDependencies().then(
+                () => {
+                  console.log('Starter has been successfully installed. Good luck '.green +
+                    emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
+                }
+              )
+            }
+          )
+        }
+      )
+    }
+  );
+}
+
 module.exports = function() {
   let qTypes = [{
     message: 'Select project type:',
@@ -95,8 +117,7 @@ module.exports = function() {
 
   function commands(info) {
     info.type = {
-      repo: 'https://github.com/justcoded/web-starter-kit.git',
-      branch: 'master'
+      repo: 'https://github.com/justcoded/web-starter-kit.git'
     };
 
     if (!info.type) {
@@ -106,25 +127,7 @@ module.exports = function() {
 
     switch(info.answer) {
       case 'markup':
-        createTmpFolder().then(
-          () => {
-            console.log('\nGetting starter files... ' + emoji.get('runner'));
-            gitClone(info.type.repo).then(
-              () => {
-                moveFiles().then(
-                  () => {
-                    installDependencies().then(
-                      () => {
-                        console.log('Starter has been successfully installed. Good luck '.green + 
-                          emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
-                      }
-                    )
-                  }
-                )
-              }
-            )
-          }
-        );
+        init(info.type.repo);
         break;
       case 'js':
         console.log('In maintenance, sorry '.red + emoji.get('hourglass'));

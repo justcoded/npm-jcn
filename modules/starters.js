@@ -6,7 +6,12 @@ const inquirer = require('inquirer'),
       fs       = require('fs'),
       copydir  = require('copy-dir'),
       emoji    = require('node-emoji'),
-      del      = require('del');
+      del      = require('del'),
+      noEmoji  = /^win/.test(process.platform);
+
+if(noEmoji) {
+  emoji.get = () => '';
+}
 
 function logComplete(task) {
   console.log('['.green + task.green + ' ' + emoji.get('white_check_mark') + ' ]\n'.green);
@@ -72,10 +77,10 @@ module.exports = function() {
     type: 'list',
     name: 'answer',
     choices: [{
-      name: 'Markup 🗒',
+      name: 'Markup ' + emoji.get('spiral_note_pad'),
       value: 'markup'
     }, {
-      name: 'JS 🦏',
+      name: 'JS ' + emoji.get('hammer_and_wrench'),
       value: 'js'
     }]
   }];

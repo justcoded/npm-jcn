@@ -80,12 +80,12 @@ function init(repo) {
         () => {
           moveFiles().then(
             () => {
-              installDependencies().then(
-                () => {
-                  console.log('Starter has been successfully installed. Good luck '.green +
-                    emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
-                }
-              )
+              // installDependencies().then(
+              //   () => {
+              console.log('Starter has been successfully installed. Good luck '.green +
+                emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
+              //   }
+              // )
             }
           )
         }
@@ -98,7 +98,7 @@ module.exports = function () {
   let qTypes = [{
       message: 'Select project type:',
       type: 'list',
-      name: 'projectType',
+      name: 'value',
       choices: [{
         name: 'Markup',
         value: true
@@ -109,11 +109,11 @@ module.exports = function () {
     },
     {
       when: function (response) {
-        return response.projectType;
+        return response.value;
       },
       message: 'Would you like to use SCSS maps?',
       type: 'list',
-      name: 'branch',
+      name: 'value',
       choices: [{
         name: 'Yes',
         // Branch name
@@ -135,14 +135,14 @@ module.exports = function () {
   });
 
   function commands(info) {
-    if (!info.projectType) {
+    if (!info.value) {
       console.log('In maintenance, sorry '.red + emoji.get('hourglass'));
       return;
     }
 
     init({
       url: 'https://github.com/justcoded/web-starter-kit.git',
-      branch: info.branch
+      branch: info.value
     });
   }
 };

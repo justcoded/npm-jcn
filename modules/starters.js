@@ -94,18 +94,22 @@ function init(repo) {
 }
 
 module.exports = function() {
-  let qTypes = [{
-    message: 'Select project type:',
-    type: 'list',
-    name: 'answer',
-    choices: [{
-      name: 'Markup ' + emoji.get('spiral_note_pad'),
-      value: 'markup'
-    }, {
-      name: 'JS ' + emoji.get('hammer_and_wrench'),
-      value: 'js'
-    }]
-  }];
+  let qTypes = [
+    {
+      message: 'Select project type:',
+      type: 'list',
+      name: 'answer',
+      choices: [
+        {
+          name: 'Markup ' + emoji.get('spiral_note_pad'),
+          value: 'markup'
+        }, {
+          name: 'JS ' + emoji.get('hammer_and_wrench'),
+          value: 'js'
+        }
+      ]
+    }
+  ];
 
   console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);
 

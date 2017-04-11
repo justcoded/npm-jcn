@@ -80,12 +80,12 @@ function init(repo) {
         () => {
           moveFiles().then(
             () => {
-              // installDependencies().then(
-              //   () => {
+              installDependencies().then(
+                () => {
               console.log('Starter has been successfully installed. Good luck '.green +
                 emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
-              //   }
-              // )
+                }
+              )
             }
           )
         }

@@ -4,9 +4,14 @@ const inquirer = require('inquirer'),
       colors   = require('colors'),
       shell    = require('shelljs/global'),
       fs       = require('fs'),
-      path     = require('path'),
       copydir  = require('copy-dir'),
-      emoji    = require('node-emoji');
+      emoji    = require('node-emoji'),
+      del      = require('del'),
+      noEmoji  = /^win/.test(process.platform);
+
+if(noEmoji) {
+  emoji.get = () => '';
+}
 
 function logComplete(task) {
   console.log('['.green + task.green + ' ' + emoji.get('white_check_mark') + ' ]\n'.green);
@@ -31,7 +36,8 @@ function createTmpFolder() {
 
 function gitClone(repo) {
   return new Promise((resolve, reject) => {
-    exec('git clone ' + repo + ' ./ && rm -rf .git');
+    exec('git clone ' + repo + ' ./');
+    del.sync(['.git']);
     logComplete('Git cloning has been completed')
 
     resolve();
@@ -57,7 +63,7 @@ function moveFiles() {
         return;
       }
       cd('..');
-      exec('rm -rf tmp');
+      del.sync(['tmp']);
       logComplete('Copying files has been completed');
 
       resolve();
@@ -71,10 +77,10 @@ module.exports = function() {
     type: 'list',
     name: 'answer',
     choices: [{
-      name: 'Markup 🗒',
+      name: 'Markup ' + emoji.get('spiral_note_pad'),
       value: 'markup'
     }, {
-      name: 'JS 🦏',
+      name: 'JS ' + emoji.get('hammer_and_wrench'),
       value: 'js'
     }]
   }];

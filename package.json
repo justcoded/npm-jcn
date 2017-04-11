@@ -28,6 +28,7 @@
   "dependencies": {
     "colors": "^1.1.2",
     "copy-dir": "^0.3.0",
+    "del": "^2.2.2",
     "inquirer": "^3.0.6",
     "node-emoji": "^1.5.1",
     "shelljs": "^0.7.7"

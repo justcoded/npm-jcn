@@ -13,9 +13,9 @@ Command line tool for JustCoded company which allows to create starter boilerpla
 
 1. [System Requirements](#system-requirements)
 1. [Installation](#installation)
-2. [Troubleshooting](#troubleshooting)
-3. [Contributing](#contributing)
-4. [License](#license)
+1. [Troubleshooting](#troubleshooting)
+1. [Contributing](#contributing)
+1. [License](#license)
 
 
 ## System Requirements

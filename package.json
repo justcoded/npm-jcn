@@ -1,6 +1,6 @@
 {
   "name": "jcn",
-  "version": "0.3.11",
+  "version": "0.6.0",
   "description": "JustCoded command line tool",
   "preferGlobl": true,
   "bin": {
@@ -14,11 +14,12 @@
     "url": "git+git@github.com:justcoded/npm-jcn.git"
   },
   "keywords": [
-    "justcoded",
+    "starter",
     "jcn",
+    "JustCoded",
     "jc"
   ],
-  "author": "Justcoded",
+  "author": "JustCoded",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/justcoded/npm-jcn/issues"
@@ -26,7 +27,13 @@
   "homepage": "https://github.com/justcoded/npm-jcn#readme",
   "dependencies": {
     "colors": "^1.1.2",
-    "inquirer": "^1.1.0",
-    "shelljs": "^0.7.0"
+    "copy-dir": "^0.3.0",
+    "del": "^2.2.2",
+    "inquirer": "^3.0.6",
+    "node-emoji": "^1.5.1",
+    "shelljs": "^0.7.7"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   }
 }

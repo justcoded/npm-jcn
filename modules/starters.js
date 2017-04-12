@@ -100,11 +100,13 @@ module.exports = function () {
       type: 'list',
       name: 'value',
       choices: [{
-        name: 'Markup',
-        value: true
+        name: 'Yes',
+        // Branch name
+        value: 'master'
       }, {
-        name: 'JS',
-        value: false
+        name: 'No',
+        // Branch name
+        value: 'Without-SCSS-Map'
       }]
     },
     {

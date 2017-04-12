@@ -1,93 +1,150 @@
-var inquirer = require('inquirer'),
+'use strict';
+
+const inquirer = require('inquirer'),
   colors = require('colors'),
-  shell = require('shelljs/global');
+  shell = require('shelljs/global'),
+  fs = require('fs'),
+  copydir = require('copy-dir'),
+  emoji = require('node-emoji'),
+  del = require('del'),
+  noEmoji = /^win/.test(process.platform);
 
-colors.setTheme({
-  info: ['white', 'bgBlack'],
-  success: ['green', 'bgBlack'],
-  warn: ['orange', 'bgBlack'],
-  error: ['red', 'bgBlack']
-});
-
-function logComplete() {
-  console.log('[Complete]'.success);
-  console.log('\n\n');
+if (noEmoji) {
+  emoji.get = () => '';
 }
 
-module.exports = function() {
-  var qTypes = [{
-      message: 'Do you need markup starter?',
-      type: 'list',
-      name: 'isMarkup',
-      choices: [{
-        name: 'Yes',
-        value: true
-      }, {
-        name: 'No',
-        value: false
-      }]
-    }, {
-      message: 'Type new project repository url (Default: no repository)',
-      type: 'input',
-      name: 'repo',
-      when: function(answers) {
-        return !answers.isMarkup;
-      }
-    }, {
-      message: function(answers) {
-        return 'Type your branch (default: master)';
-      },
-      when: function(answers) {
-        return answers.repo;
-      },
-      type: 'input',
-      name: 'branch'
-    }
+function logComplete(task) {
+  console.log('['.green + task.green + ' ' + emoji.get('white_check_mark') + ' ]\n'.green);
+}
 
-  ];
+function folderExists(src) {
+  return fs.existsSync(src);
+}
 
-  var prompt = inquirer.createPromptModule();
-
-  // inquirer.prompt(qTypes, commands);
-  prompt(qTypes).then(function (answers) {
-    commands(answers)
-});
-
-  function commands(info) {
-    console.log(info);
-    info.type = {
-        repo: 'https://github.com/justcoded/web-starter-kit.git',
-        branch: 'master',
-        exec: function() {
-          console.log('Installing Npm and Bower dependencies'.info);
-          exec('npm install');
-          logComplete();
-        }
-    };
-
-    if (!info.type) {
-      console.log('Still in maintenance, sorry :('.red);
+function createTmpFolder() {
+  return new Promise((resolve, reject) => {
+    if (folderExists('tmp')) {
+      console.log('Destination path already exists and is not an empty directory. '.red + emoji.get('cry'));
       return;
     }
-    if (info.isMarkup) {
-      exec('mkdir markup');
-      cd('markup');
+    exec('mkdir tmp');
+    cd('tmp');
+
+    resolve();
+  });
+}
+
+function gitClone(repo) {
+  return new Promise((resolve, reject) => {
+    console.log('Clone from ' + repo.url + ' ' + repo.branch);
+    exec('git clone ' + repo.url + ' ./ -b ' + repo.branch);
+    del.sync(['.git']);
+    logComplete('Git cloning has been completed')
+
+    resolve();
+  });
+}
+
+function installDependencies() {
+  return new Promise((resolve, reject) => {
+    console.log('Installing npm dependencies...');
+    exec('npm install');
+    logComplete('Dependencies have been installed');
+
+    resolve();
+  });
+}
+
+function moveFiles() {
+  return new Promise((resolve, reject) => {
+    console.log('Copying files...');
+    copydir('../tmp', '../', (err) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      cd('..');
+      del.sync(['tmp']);
+      logComplete('Copying files has been completed');
+
+      resolve();
+    });
+  });
+}
+
+function init(repo) {
+  createTmpFolder().then(
+    () => {
+      console.log('\nGetting starter files... ' + emoji.get('runner'));
+      gitClone(repo).then(
+        () => {
+          moveFiles().then(
+            () => {
+              installDependencies().then(
+                () => {
+              console.log('Starter has been successfully installed. Good luck '.green +
+                emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
+                }
+              )
+            }
+          )
+        }
+      )
     }
-    console.log('Getting starter files'.info);
-    exec('git clone ' + info.type.repo + ' ./');
-    logComplete();
-    exec('rm -rf .git');
-    if (info.repo) {
-      info.branch = info.branch || 'master';
-      console.log('Create initial commit and push it into repository'.info);
-      exec('git init && git add . && git commit -m "Init Starter Kit"');
-      logComplete();
-      exec('git remote add origin ' + info.repo);
-      console.log('Pushing the code to the repository'.info);
-      exec('git push origin ' + info.branch);
-      logComplete();
+  );
+}
+
+module.exports = function () {
+  let qTypes = [{
+      message: 'Select project type:',
+      type: 'list',
+      name: 'value',
+      choices: [{
+        name: 'Yes',
+        // Branch name
+        value: 'master'
+      }, {
+        name: 'No',
+        // Branch name
+        value: 'Without-SCSS-Map'
+      }]
+    },
+    {
+      when: function (response) {
+        return response.value;
+      },
+      message: 'Would you like to use SCSS maps?',
+      type: 'list',
+      name: 'value',
+      choices: [{
+        name: 'Yes',
+        // Branch name
+        value: 'Without-SCSS-Map'
+      }, {
+        name: 'No',
+        // Branch name
+        value: 'master'
+      }]
     }
-    info.type.exec && info.type.exec();
-    console.log('Starter was successfully installed. Good luck :)'.success);
+  ];
+
+  console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);
+
+  let prompt = inquirer.createPromptModule();
+
+  prompt(qTypes).then((answers) => {
+    commands(answers)
+  });
+
+  function commands(info) {
+    if (!info.value) {
+      console.log('In maintenance, sorry '.red + emoji.get('hourglass'));
+      return;
+    }
+
+    init({
+      url: 'https://github.com/justcoded/web-starter-kit.git',
+      branch: info.value
+    });
   }
 };

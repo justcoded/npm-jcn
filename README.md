@@ -9,27 +9,28 @@
 
 Command line tool for JustCoded company which allows to create starter boilerplate for different kind of projects.
 
-## Table of Contents
 
-1. [System Requirements](#system-requirements)
-1. [Installation](#installation)
-2. [Troubleshooting](#troubleshooting)
-3. [Contributing](#contributing)
-4. [License](#license)
+## Unix Install
 
+For installation open Terminal and run:
 
-## System Requirements
+```sh
+sudo npm install jcn --global
+```
 
 
+## Windows Install
 
-## Installation
+Open a Command Prompt as an Administrator and run:
 
-For installation run npm install jcn --g (possible nedded admin rights)
+```sh
+npm install jcn --global
+```
 
 
 ## Troubleshooting
 
-If you find yourself running into issues during installation or running the tools, please check our [Troubleshooting](https://github.com/justcoded/jcn/wiki/Troubleshooting) guide and then open an [issue](https://github.com/justcoded/jcn/issues). We would be happy to discuss how they can be solved.
+If you find yourself running into issues during installation or running the tools, please check our (https://github.com/justcoded/jcn/wiki/Troubleshooting) guide and then open an [issue](https://github.com/justcoded/jcn/issues). We would be happy to discuss how they can be solved.
 
 
 ## Contributing

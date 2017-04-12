@@ -12,7 +12,7 @@ Command line tool for JustCoded company which allows to create starter boilerpla
 
 ## Unix Install
 
-For installation open terminal and run:
+For installation open Terminal and run:
 
 ```sh
 sudo npm install jcn --global

@@ -102,11 +102,11 @@ module.exports = function () {
       choices: [{
         name: 'Yes',
         // Branch name
-        value: 'master'
+        value: true
       }, {
         name: 'No',
         // Branch name
-        value: 'Without-SCSS-Map'
+        value: false
       }]
     },
     {
@@ -119,11 +119,11 @@ module.exports = function () {
       choices: [{
         name: 'Yes',
         // Branch name
-        value: 'Without-SCSS-Map'
+        value: 'master'
       }, {
         name: 'No',
         // Branch name
-        value: 'master'
+        value: 'Without-SCSS-Map'
       }]
     }
   ];

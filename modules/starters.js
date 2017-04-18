@@ -82,8 +82,8 @@ function init(repo) {
             () => {
               installDependencies().then(
                 () => {
-              console.log('Starter has been successfully installed. Good luck '.green +
-                emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
+                  console.log('Starter has been successfully installed. Good luck '.green +
+                    emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
                 }
               )
             }
@@ -96,36 +96,36 @@ function init(repo) {
 
 module.exports = function () {
   let qTypes = [{
-      message: 'Select project type:',
-      type: 'list',
-      name: 'value',
-      choices: [{
-        name: 'Yes',
-        // Branch name
-        value: true
-      }, {
-        name: 'No',
-        // Branch name
-        value: false
-      }]
+    message: 'Select project type:',
+    type: 'list',
+    name: 'value',
+    choices: [{
+      name: 'Markup',
+      // Branch name
+      value: true
+    }, {
+      name: 'JavaScript',
+      // Branch name
+      value: false
+    }]
+  },
+  {
+    when: function (response) {
+      return response.value;
     },
-    {
-      when: function (response) {
-        return response.value;
-      },
-      message: 'Would you like to use SCSS maps?',
-      type: 'list',
-      name: 'value',
-      choices: [{
-        name: 'Yes',
-        // Branch name
-        value: 'master'
-      }, {
-        name: 'No',
-        // Branch name
-        value: 'Without-SCSS-Map'
-      }]
-    }
+    message: 'Would you like to use SCSS maps?',
+    type: 'list',
+    name: 'value',
+    choices: [{
+      name: 'Yes',
+      // Branch name
+      value: 'master'
+    }, {
+      name: 'No',
+      // Branch name
+      value: 'Without-SCSS-Map'
+    }]
+  },
   ];
 
   console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);

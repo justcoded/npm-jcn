@@ -133,7 +133,7 @@ module.exports = function () {
   let prompt = inquirer.createPromptModule();
 
   prompt(qTypes).then((answers) => {
-    commands(answers)
+    commands(answers);
   });
 
   function commands(info) {

@@ -30,7 +30,7 @@ npm install jcn --global
 
 ## Troubleshooting
 
-If you find yourself running into issues during installation or running the tools, please check our (https://github.com/justcoded/jcn/wiki/Troubleshooting) guide and then open an [issue](https://github.com/justcoded/jcn/issues). We would be happy to discuss how they can be solved.
+If you find yourself running into issues during installation or running the tools, please open an [issue](https://github.com/justcoded/jcn/issues). We would be happy to discuss how they can be solved.
 
 
 ## Contributing

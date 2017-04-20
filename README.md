@@ -2,7 +2,7 @@
 
 
 
-[![Downloads](https://img.shields.io/npm/dm/jcn.svg)](https://www.npmjs.com/package/jcn) [![Downloads](https://img.shields.io/npm/v/jcn.svg)](https://www.npmjs.com/package/jcn) [![Downloads](https://img.shields.io/node/v/jcn.svg)](https://www.npmjs.com/package/jcn) [![license](http://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)  [![readme](http://img.shields.io/badge/readme-md-blue.svg)](/README.md) [![requests](http://img.shields.io/badge/PRs-welcome-green.svg)](/pulls)
+[![Downloads](https://img.shields.io/npm/dm/jcn.svg)](https://www.npmjs.com/package/jcn) [![Downloads](https://img.shields.io/npm/v/jcn.svg)](https://www.npmjs.com/package/jcn) [![Downloads](https://img.shields.io/node/v/jcn.svg)](https://www.npmjs.com/package/jcn) [![travis](https://img.shields.io/travis/justcoded/npm-jcn.svg)](https://travis-ci.org) [![license](http://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)  [![readme](http://img.shields.io/badge/readme-md-blue.svg)](/README.md) [![requests](http://img.shields.io/badge/PRs-welcome-green.svg)](/pulls)
 
 
 ## Overview

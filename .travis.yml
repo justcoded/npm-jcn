@@ -1,5 +1,5 @@
-sudo: false
-before_install: npm install jcn
+sudo: true
+before_install: sudo npm install jcn
 language: node_js
 node_js:
   - '7'

@@ -76,20 +76,13 @@ function init(repo) {
   createTmpFolder().then(
     () => {
       console.log('\nGetting starter files... ' + emoji.get('runner'));
-      gitClone(repo).then(
-        () => {
-          moveFiles().then(
-            () => {
-              installDependencies().then(
-                () => {
-                  console.log('Starter has been successfully installed. Good luck '.green +
-                    emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
-                }
-              )
-            }
-          )
-        }
-      )
+      gitClone(repo)
+        .then(moveFiles)
+        .then(installDependencies)
+        .then(() => {
+          console.log('Starter has been successfully installed. Good luck '.green +
+            emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
+        });
     }
   );
 }

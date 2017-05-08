@@ -1,150 +1,106 @@
 'use strict';
 
-const inquirer = require('inquirer'),
-  colors = require('colors'),
-  shell = require('shelljs/global'),
-  fs = require('fs'),
-  copydir = require('copy-dir'),
-  emoji = require('node-emoji'),
-  del = require('del'),
-  noEmoji = /^win/.test(process.platform);
+const lib = require('../lib/library'),
+  inquirer = require('inquirer'),
+  noEmoji = /^win/.test(process.platform),
+  defaultGit = 'https://github.com/justcoded/web-starter-kit.git';
+
+let config = [];
 
 if (noEmoji) {
   emoji.get = () => '';
 }
 
-function logComplete(task) {
-  console.log('['.green + task.green + ' ' + emoji.get('white_check_mark') + ' ]\n'.green);
-}
-
-function folderExists(src) {
-  return fs.existsSync(src);
-}
-
-function createTmpFolder() {
-  return new Promise((resolve, reject) => {
-    if (folderExists('tmp')) {
-      console.log('Destination path already exists and is not an empty directory. '.red + emoji.get('cry'));
-      return;
-    }
-    exec('mkdir tmp');
-    cd('tmp');
-
-    resolve();
-  });
-}
-
-function gitClone(repo) {
-  return new Promise((resolve, reject) => {
-    console.log('Clone from ' + repo.url + ' ' + repo.branch);
-    exec('git clone ' + repo.url + ' ./ -b ' + repo.branch);
-    del.sync(['.git']);
-    logComplete('Git cloning has been completed')
-
-    resolve();
-  });
-}
-
-function installDependencies() {
-  return new Promise((resolve, reject) => {
-    console.log('Installing npm dependencies...');
-    exec('npm install');
-    logComplete('Dependencies have been installed');
-
-    resolve();
-  });
-}
-
-function moveFiles() {
-  return new Promise((resolve, reject) => {
-    console.log('Copying files...');
-    copydir('../tmp', '../', (err) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      cd('..');
-      del.sync(['tmp']);
-      logComplete('Copying files has been completed');
-
-      resolve();
-    });
-  });
-}
-
-function init(repo) {
-  createTmpFolder().then(
-    () => {
-      console.log('\nGetting starter files... ' + emoji.get('runner'));
-      gitClone(repo).then(
-        () => {
-          moveFiles().then(
-            () => {
-              installDependencies().then(
-                () => {
-                  console.log('Starter has been successfully installed. Good luck '.green +
-                    emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
-                }
-              )
-            }
-          )
-        }
-      )
-    }
-  );
-}
-
-module.exports = function () {
-  let qTypes = [{
-    message: 'Select project type:',
-    type: 'list',
-    name: 'value',
-    choices: [{
-      name: 'Markup',
-      // Branch name
-      value: true
-    }, {
-      name: 'JavaScript',
-      // Branch name
-      value: false
-    }]
-  },
-  {
-    when: function (response) {
-      return response.value;
-    },
-    message: 'Would you like to use SCSS maps?',
-    type: 'list',
-    name: 'value',
-    choices: [{
-      name: 'Yes',
-      // Branch name
-      value: 'master'
-    }, {
-      name: 'No',
-      // Branch name
-      value: 'Without-SCSS-Map'
-    }]
-  },
-  ];
-
+module.exports = () => {
   console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);
 
-  let prompt = inquirer.createPromptModule();
+  function projectType() {
+    return new Promise(function (resolve, reject) {
+      let questions = [{
+        message: 'Select project type:',
+        type: 'list',
+        name: 'value',
+        choices: [{
+          name: 'Gulp',
+          value: 'Gulp'
+        }, {
+          name: 'Webpack',
+          value: 'Webpack'
+        }]
+      }];
 
-  prompt(qTypes).then((answers) => {
-    commands(answers);
-  });
-
-  function commands(info) {
-    if (!info.value) {
-      console.log('In maintenance, sorry '.red + emoji.get('hourglass'));
-      return;
-    }
-
-    init({
-      url: 'https://github.com/justcoded/web-starter-kit.git',
-      branch: info.value
+      inquirer.prompt(questions).then(answers => {
+        console.log(answers.value);
+        switch (answers.value) {
+          case 'Gulp':
+            // Gulp git
+            config.push({
+              url: defaultGit,
+              branch: 'master'
+            });
+            break;
+          case 'Webpack':
+            console.log('In maintenance, sorry '.red + emoji.get('hourglass'));
+            return;
+          default:
+            console.log('Something went wrong!'.red);
+        }
+        resolve();
+      });
     });
   }
+
+  projectType().then(() => {
+    let questions = [{
+        message: 'Would you like to use SCSS maps?',
+        type: 'list',
+        name: 'value',
+        choices: [{
+          name: 'Yes',
+          value: 'default'
+        }, {
+          name: 'No',
+          value: 'Without-SCSS-Map'
+        }]
+      },
+      {
+        when: function (answers) {
+          if (answers.value === 'Without-SCSS-Map') {
+            config.push({
+              // Without-SCSS-Map git branch
+              url: defaultGit,
+              branch: 'Without-SCSS-Map'
+            });
+          }
+          return answers.value;
+        },
+        message: 'Would you like to use Bootstrap?',
+        type: 'list',
+        name: 'value',
+        choices: [{
+          name: 'Yes',
+          // With-Bootstrap git branch
+          value: 'With-Bootstrap',
+          delete: [
+            'src/scss/abstracts',
+            'src/scss/base'
+          ]
+        }, {
+          name: 'No',
+          value: 'default'
+        }]
+      }
+    ];
+
+    inquirer.prompt(questions).then(answers => {
+      if (answers.value !== 'default') {
+        config.push({
+          url: defaultGit,
+          branch: answers.value
+        });
+      }
+
+      lib.init(config);
+    });
+  });
 };

@@ -80,11 +80,7 @@ module.exports = () => {
         choices: [{
           name: 'Yes',
           // With-Bootstrap git branch
-          value: 'With-Bootstrap',
-          delete: [
-            'src/scss/abstracts',
-            'src/scss/base'
-          ]
+          value: 'With-Bootstrap'
         }, {
           name: 'No',
           value: 'default'
@@ -96,7 +92,11 @@ module.exports = () => {
       if (answers.value !== 'default') {
         config.push({
           url: defaultGit,
-          branch: answers.value
+          branch: answers.value,
+          delete: [
+            'src/scss/abstracts',
+            'src/scss/base'
+          ]
         });
       }
 

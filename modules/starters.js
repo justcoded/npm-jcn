@@ -30,7 +30,6 @@ module.exports = () => {
       }];
 
       inquirer.prompt(questions).then(answers => {
-        console.log(answers.value);
         switch (answers.value) {
           case 'Gulp':
             // Gulp git
@@ -93,7 +92,7 @@ module.exports = () => {
         config.push({
           url: defaultGit,
           branch: answers.value,
-          delete: [
+          filesToDelete: [
             'src/scss/abstracts',
             'src/scss/base'
           ]

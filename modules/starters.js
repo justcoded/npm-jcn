@@ -43,6 +43,7 @@ module.exports = () => {
             return;
           default:
             console.log('Something went wrong!'.red);
+            return;
         }
         resolve();
       });

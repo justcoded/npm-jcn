@@ -7,10 +7,6 @@ const lib = require('../lib/library'),
 
 let config = [];
 
-if (noEmoji) {
-  emoji.get = () => '';
-}
-
 module.exports = () => {
   console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);
 
@@ -39,7 +35,7 @@ module.exports = () => {
             });
             break;
           case 'Webpack':
-            console.log('In maintenance, sorry '.red + emoji.get('hourglass'));
+            console.log('In maintenance, sorry '.red + lib.emoji.get('hourglass'));
             return;
           default:
             console.log('Something went wrong!'.red);

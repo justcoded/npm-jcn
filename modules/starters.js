@@ -90,7 +90,6 @@ module.exports = () => {
           url: defaultGit,
           branch: answers.value,
           filesToDelete: [
-            'src/scss/abstracts',
             'src/scss/base'
           ]
         });

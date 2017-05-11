@@ -7,10 +7,6 @@ const lib = require('../lib/library'),
 
 let config = [];
 
-if (noEmoji) {
-  emoji.get = () => '';
-}
-
 module.exports = () => {
   console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);
 
@@ -30,7 +26,6 @@ module.exports = () => {
       }];
 
       inquirer.prompt(questions).then(answers => {
-        console.log(answers.value);
         switch (answers.value) {
           case 'Gulp':
             // Gulp git
@@ -40,10 +35,11 @@ module.exports = () => {
             });
             break;
           case 'Webpack':
-            console.log('In maintenance, sorry '.red + emoji.get('hourglass'));
+            console.log('In maintenance, sorry '.red + lib.emoji.get('hourglass'));
             return;
           default:
             console.log('Something went wrong!'.red);
+            return;
         }
         resolve();
       });
@@ -80,11 +76,7 @@ module.exports = () => {
         choices: [{
           name: 'Yes',
           // With-Bootstrap git branch
-          value: 'With-Bootstrap',
-          delete: [
-            'src/scss/abstracts',
-            'src/scss/base'
-          ]
+          value: 'With-Bootstrap'
         }, {
           name: 'No',
           value: 'default'
@@ -96,7 +88,10 @@ module.exports = () => {
       if (answers.value !== 'default') {
         config.push({
           url: defaultGit,
-          branch: answers.value
+          branch: answers.value,
+          filesToDelete: [
+            'src/scss/base'
+          ]
         });
       }
 

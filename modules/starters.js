@@ -46,56 +46,64 @@ module.exports = () => {
     });
   }
 
-  projectType().then(() => {
-    let questions = [{
-        message: 'Would you like to use SCSS maps?',
-        type: 'list',
-        name: 'value',
-        choices: [{
-          name: 'Yes',
-          value: 'default'
-        }, {
-          name: 'No',
-          value: 'Without-SCSS-Map'
-        }]
-      },
-      {
-        when: function (answers) {
-          if (answers.value === 'Without-SCSS-Map') {
+  projectType()
+    .then(() => {
+      let questions = [{
+          message: 'Would you like to use SCSS maps?',
+          type: 'list',
+          name: 'value',
+          choices: [{
+            name: 'Yes',
+            value: 'default'
+          }, {
+            name: 'No',
+            value: 'Without-SCSS-Map'
+          }]
+        },
+        {
+          when: function (answers) {
+            if (answers.value === 'Without-SCSS-Map') {
+              config.push({
+                // Without-SCSS-Map git branch
+                url: defaultGit,
+                branch: 'Without-SCSS-Map'
+              });
+            }
+            return answers.value;
+          },
+          message: 'Would you like to use Bootstrap?',
+          type: 'list',
+          name: 'value',
+          choices: [{
+            name: 'Yes',
+            // With-Bootstrap git branch
+            value: 'With-Bootstrap'
+          }, {
+            name: 'No',
+            value: 'default'
+          }]
+        }
+      ];
+
+      inquirer.prompt(questions)
+        .then(answers => {
+          if (answers.value !== 'default') {
             config.push({
-              // Without-SCSS-Map git branch
               url: defaultGit,
-              branch: 'Without-SCSS-Map'
+              branch: answers.value,
+              filesToDelete: [
+                'src/scss/base'
+              ]
             });
           }
-          return answers.value;
-        },
-        message: 'Would you like to use Bootstrap?',
-        type: 'list',
-        name: 'value',
-        choices: [{
-          name: 'Yes',
-          // With-Bootstrap git branch
-          value: 'With-Bootstrap'
-        }, {
-          name: 'No',
-          value: 'default'
-        }]
-      }
-    ];
 
-    inquirer.prompt(questions).then(answers => {
-      if (answers.value !== 'default') {
-        config.push({
-          url: defaultGit,
-          branch: answers.value,
-          filesToDelete: [
-            'src/scss/base'
-          ]
+          lib.init(config);
+        })
+        .catch(e => {
+          console.log(e);
         });
-      }
-
-      lib.init(config);
-    });
-  });
+    })
+    .catch(e => {
+      console.log(e);
+    });;
 };

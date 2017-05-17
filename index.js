@@ -4,4 +4,4 @@
 require('shelljs/global');
 
 // Init app modules
-require('./modules/starters')();
+require('./modules/questions')();

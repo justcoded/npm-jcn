@@ -1,6 +1,6 @@
 'use strict';
 
-const logic = require('./logic'),
+const behavior = require('./behavior'),
   inquirer = require('inquirer'),
   noEmoji = /^win/.test(process.platform),
   defaultGit = 'https://github.com/justcoded/web-starter-kit.git';
@@ -35,7 +35,7 @@ module.exports = () => {
             });
             break;
           case 'Webpack':
-            console.log('In maintenance, sorry '.red + logic.emoji.get('hourglass'));
+            console.log('In maintenance, sorry '.red + behavior.emoji.get('hourglass'));
             return;
           default:
             console.log('Something went wrong!'.red);
@@ -97,7 +97,7 @@ module.exports = () => {
             });
           }
 
-          logic.init(config);
+          behavior.init(config);
         })
         .catch(e => {
           console.log(e);

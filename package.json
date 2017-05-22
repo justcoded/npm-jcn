@@ -7,7 +7,7 @@
     "jcn": "index.js"
   },
   "scripts": {
-    "test": "jcn"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",

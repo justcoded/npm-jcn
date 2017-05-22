@@ -26,8 +26,7 @@ let config = {},
   dependencies = require('./dependencies')({
     errorMessage: errorMessage,
     logComplete: logComplete,
-    fs: fs,
-    del: del
+    fs: fs
   }),
   vendor = require('./vendor')({
     errorMessage: errorMessage,

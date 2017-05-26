@@ -49,27 +49,28 @@ module.exports = () => {
   projectType()
     .then(() => {
       let questions = [{
-          message: 'Would you like to use SCSS maps?',
+          message: 'Would you like to use Pug?',
           type: 'list',
           name: 'value',
           choices: [{
             name: 'Yes',
-            value: 'default'
+            // With-Pug git branch
+            value: 'With-Pug'
           }, {
             name: 'No',
-            value: 'Without-SCSS-Map'
-          }]
+            value: 'default'
+          }],
         },
         {
           when: function (answers) {
-            if (answers.value === 'Without-SCSS-Map') {
+            if (answers.value === 'With-Pug') {
               config.push({
-                // Without-SCSS-Map git branch
                 url: defaultGit,
-                branch: 'Without-SCSS-Map'
+                branch: 'With-Pug'
               });
             }
-            return answers.value;
+
+            return true;
           },
           message: 'Would you like to use Bootstrap?',
           type: 'list',
@@ -81,19 +82,45 @@ module.exports = () => {
           }, {
             name: 'No',
             value: 'default'
+          }],
+        },
+        {
+          when: function (answers) {
+            let isBootstrap = false;
+
+            if (answers.value === 'With-Bootstrap') {
+              isBootstrap = true;
+
+              config.push({
+                url: defaultGit,
+                branch: 'With-Bootstrap',
+                filesToDelete: [
+                  'src/scss/base'
+                ]
+              });
+            }
+
+            return !isBootstrap;
+          },
+          message: 'Would you like to use SCSS maps?',
+          type: 'list',
+          name: 'value',
+          choices: [{
+            name: 'Yes',
+            value: 'default'
+          }, {
+            name: 'No',
+            value: 'Without-SCSS-Map'
           }]
         }
       ];
 
       inquirer.prompt(questions)
         .then(answers => {
-          if (answers.value !== 'default') {
+          if (answers.value === 'Without-SCSS-Map') {
             config.push({
               url: defaultGit,
-              branch: answers.value,
-              filesToDelete: [
-                'src/scss/base'
-              ]
+              branch: answers.value
             });
           }
 

@@ -103,7 +103,9 @@ function moveFiles() {
 function finish() {
   console.log('Starter has been successfully installed. Good luck '.green +
     emoji.get('wink') + ' \n\u00A9 JustCoded'.green);
-  exec('gulp');
+  if (Array.prototype.indexOf.call(process.argv, '-d') < 0) {
+    exec('gulp');
+  }
 }
 
 

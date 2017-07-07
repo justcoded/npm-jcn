@@ -111,9 +111,11 @@ module.exports = function (options) {
      */
     installDependencies: function () {
       return new Promise((resolve, reject) => {
-        console.log('Installing npm dependencies...');
-        exec('npm install');
-        options.logComplete('Dependencies have been installed');
+        if (Array.prototype.indexOf.call(process.argv, '-d') < 0) {
+          console.log('Installing npm dependencies...');
+          exec('npm install');
+          options.logComplete('Dependencies have been installed');
+        }
 
         resolve();
       });

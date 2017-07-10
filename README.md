@@ -31,11 +31,15 @@ npm install jcn --global
 
 Just run the **jcn** command in an empty project folder:
 
-```jcn```
+```sh
+jcn
+```
 
 Also you can use the **-d** key which prevents a node modules installation and gulp execution:
 
-```jcn -d```
+```sh
+jcn -d
+```
 
 
 ## Troubleshooting

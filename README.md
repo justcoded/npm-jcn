@@ -27,6 +27,20 @@ Open a Command Prompt as an Administrator and run:
 npm install jcn --global
 ```
 
+## Usage
+
+Just run the **jcn** command in an empty project folder:
+
+```sh
+jcn
+```
+
+Also you can use the **-d** key which prevents a node modules installation and gulp execution:
+
+```sh
+jcn -d
+```
+
 
 ## Troubleshooting
 

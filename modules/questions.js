@@ -2,12 +2,27 @@
 
 const behavior = require('./behavior'),
   inquirer = require('inquirer'),
-  noEmoji = /^win/.test(process.platform),
+  isWindows = /^win/.test(process.platform),
   defaultGit = 'https://github.com/justcoded/web-starter-kit.git';
 
 let config = [];
 
 module.exports = () => {
+  // Check the jcn version (currently doesn't work on Windows)
+  if (!isWindows) {
+    let remoteVersion,
+      localVersion;
+
+    console.log('Local version: ');
+    localVersion = exec('npm list jcn -g | grep jcn@ | egrep -o "([0-9]{1,}\.)+[0-9]{1,}"');
+    console.log('Latest version: ');
+    remoteVersion = exec('npm view jcn version');
+
+    if (localVersion < remoteVersion) {
+      console.log('You should update the jcn:\nsudo npm install jcn -g'.red);
+    }
+  }
+
   console.log('\n*****************************************\n*\tWelcome to JustCoded Starter\t*\n*****************************************\n'.green);
 
   function projectType() {

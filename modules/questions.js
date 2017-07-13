@@ -43,10 +43,10 @@ module.exports = () => {
       inquirer.prompt(questions).then(answers => {
         switch (answers.value) {
           case 'Gulp':
-            // Gulp git
+            // Push the additional information to config
             config.push({
               url: defaultGit,
-              branch: 'master'
+              branch: 'master' // Gulp branch
             });
             break;
           case 'Webpack':
@@ -79,6 +79,7 @@ module.exports = () => {
         {
           when: function (answers) {
             if (answers.value === 'With-Pug') {
+              // Push the additional information to config
               config.push({
                 url: defaultGit,
                 branch: 'With-Pug'
@@ -87,36 +88,22 @@ module.exports = () => {
 
             return true;
           },
-          message: 'Would you like to use Bootstrap?',
+          message: 'Would you like to use CSS Framework?',
           type: 'list',
           name: 'value',
           choices: [{
             name: 'Yes',
-            // With-Bootstrap git branch
-            value: 'With-Bootstrap'
+            value: 'CssFramework-Yes'
           }, {
             name: 'No',
-            value: 'default'
+            value: 'CssFramework-No'
           }],
         },
         {
           when: function (answers) {
-            let isBootstrap = false;
-
-            if (answers.value === 'With-Bootstrap') {
-              isBootstrap = true;
-
-              config.push({
-                url: defaultGit,
-                branch: 'With-Bootstrap',
-                filesToDelete: [
-                  'src/scss/base'
-                ]
-              });
-            }
-
-            return !isBootstrap;
+            return answers.value === 'CssFramework-Yes' ? false : true;
           },
+          // This question will appear only if user doesn't want to use CSS Frameworks
           message: 'Would you like to use SCSS maps?',
           type: 'list',
           name: 'value',
@@ -127,16 +114,39 @@ module.exports = () => {
             name: 'No',
             value: 'Without-SCSS-Map'
           }]
+        },
+        {
+          when: function (answers) {
+            return answers.value === 'CssFramework-Yes' ? true : false;
+          },
+          // This question will appear onlu if user wantsto use CSS Frameworks
+          message: 'Which Framework do you want to use?',
+          type: 'list',
+          name: 'value',
+          choices: [{
+            name: 'Bootstrap',
+            // With-Bootstrap git branch
+            value: 'With-Bootstrap'
+          }, {
+            name: 'Materialize',
+            // With-Materialize git branch
+            value: 'With-Materialize'
+          }]
         }
       ];
 
       inquirer.prompt(questions)
         .then(answers => {
-          if (answers.value === 'Without-SCSS-Map') {
-            config.push({
-              url: defaultGit,
-              branch: answers.value
-            });
+          switch (answers.value) {
+            case 'Without-SCSS-Map':
+            case 'With-Bootstrap':
+            case 'With-Materialize':
+              // Push the additional information to config
+              config.push({
+                url: defaultGit,
+                branch: answers.value
+              });
+              break;
           }
 
           behavior.init(config);

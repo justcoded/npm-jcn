@@ -64,31 +64,6 @@ module.exports = () => {
   projectType()
     .then(() => {
       let questions = [{
-          message: 'Would you like to use RequireJS module loader?',
-          type: 'list',
-          name: 'value',
-          choices: [{
-            name: 'Yes',
-            // With-Require git branch
-            value: 'With-Require'
-          }, {
-            name: 'No',
-            value: 'default'
-          }],
-        }, {
-          when: function (answers) {
-            if (answers.value === 'With-Require') {
-              // Push the additional information to config
-              config[0] = {
-                url: defaultGit,
-                branch: 'With-Require'
-              };
-
-              return false;
-            }
-
-            return true;
-          },
           message: 'Would you like to use Pug?',
           type: 'list',
           name: 'value',
@@ -103,10 +78,6 @@ module.exports = () => {
         },
         {
           when: function (answers) {
-            if (answers.value === 'With-Require') {
-              return false;
-            }
-
             if (answers.value === 'With-Pug') {
               // Push the additional information to config
               config.push({

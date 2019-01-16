@@ -35,11 +35,11 @@ module.exports = () => {
         type: 'list',
         name: 'value',
         choices: [{
-          name: 'Markup Gulp',
-          value: 'Markup Gulp'
+          name: 'Front-end',
+          value: 'Front-end'
         }, {
-          name: 'WordPress Gulp',
-          value: 'WordPress Gulp'
+          name: 'WordPress',
+          value: 'WordPress'
         }]
       }];
 
@@ -48,7 +48,7 @@ module.exports = () => {
       inquirer.prompt(questions).then(answers => {
 
         switch (answers.value) {
-          case 'Markup Gulp':
+          case 'Front-end':
             // Push the additional information to config
             config.push({
               url: defaultGit,
@@ -58,7 +58,7 @@ module.exports = () => {
             isWPforPug = 'With-Pug';
 
             break;
-          case 'WordPress Gulp':
+          case 'WordPress':
             config.push({
               url: defaultGit,
               branch: 'WordPress-Gulp' // Gulp+WP branch

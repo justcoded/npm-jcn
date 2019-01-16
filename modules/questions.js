@@ -6,6 +6,8 @@ const behavior = require('./behavior'),
   defaultGit = 'https://github.com/justcoded/web-starter-kit.git';
 
 let config = [];
+let isWPforPug = '';
+let isWpGulp = '';
 
 module.exports = () => {
   // Check the jcn version (currently doesn't work on Windows)
@@ -27,31 +29,45 @@ module.exports = () => {
 
   function projectType() {
     return new Promise(function (resolve, reject) {
+
       let questions = [{
         message: 'Select project type:',
         type: 'list',
         name: 'value',
         choices: [{
-          name: 'Gulp',
-          value: 'Gulp'
+          name: 'Markup Gulp',
+          value: 'Markup Gulp'
         }, {
-          name: 'Webpack',
-          value: 'Webpack'
+          name: 'WordPress Gulp',
+          value: 'WordPress Gulp'
         }]
       }];
 
+      
+
       inquirer.prompt(questions).then(answers => {
+
         switch (answers.value) {
-          case 'Gulp':
+          case 'Markup Gulp':
             // Push the additional information to config
             config.push({
               url: defaultGit,
               branch: 'master' // Gulp branch
             });
+            
+            isWPforPug = 'With-Pug';
+
             break;
-          case 'Webpack':
-            console.log('In maintenance, sorry '.red + behavior.emoji.get('hourglass'));
-            return;
+          case 'WordPress Gulp':
+            config.push({
+              url: defaultGit,
+              branch: 'WordPress-Gulp' // Gulp+WP branch
+            });
+
+            isWpGulp = 'WordPress-Gulp-';
+            isWPforPug = 'WordPress-With-Pug';
+
+            break;
           default:
             console.log('Something went wrong!'.red);
             return;
@@ -73,7 +89,7 @@ module.exports = () => {
             value: 'With-Pug'
           }, {
             name: 'No',
-            value: 'default'
+            value: 'Markup-Gulp'
           }],
         },
         {
@@ -82,7 +98,7 @@ module.exports = () => {
               // Push the additional information to config
               config.push({
                 url: defaultGit,
-                branch: 'With-Pug'
+                branch: isWPforPug
               });
             }
 
@@ -144,7 +160,7 @@ module.exports = () => {
               // Push the additional information to config
               config.push({
                 url: defaultGit,
-                branch: answers.value
+                branch: isWpGulp + answers.value
               });
               break;
           }

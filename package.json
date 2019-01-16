@@ -1,6 +1,6 @@
 {
   "name": "jcn",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "JustCoded command line tool",
   "bin": {
     "jcn": "index.js"

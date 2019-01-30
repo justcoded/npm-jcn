@@ -114,8 +114,11 @@ function finish() {
  * @function
  * @param {Object} conf - Information about git repositary and paths to files to delete
  */
-function build(conf) {
+function build(conf, isWPforPug) {
   return new Promise((resolve, reject) => {
+
+    // define source path for WprdPress projects or clean frontend projects (isWP_Path)
+    let isWP_Path = isWPforPug == 'WordPress-With-Pug' ? 'assets' : 'src';
 
     let chain = Promise.resolve();
 
@@ -168,7 +171,7 @@ function build(conf) {
             return new Promise((resolve, reject) => {
               vendor.changeVendor({
                   config: config,
-                  path: './src/vendor_entries/vendor.scss',
+                  path: './'+isWP_Path+'/vendor_entries/vendor.scss',
                   addVendor: vendor.addVendorScss,
                   deleteVendor: vendor.deleteVendorScss
                 })
@@ -181,7 +184,7 @@ function build(conf) {
             return new Promise((resolve, reject) => {
               vendor.changeVendor({
                   config: config,
-                  path: './src/vendor_entries/vendor.js',
+                  path: './'+isWP_Path+'/vendor_entries/vendor.js',
                   addVendor: vendor.addVendorJs,
                   deleteVendor: vendor.deleteVendorJs
                 })
@@ -215,9 +218,9 @@ function build(conf) {
  * @param {Object} module.emoji - Emoji module
  */
 module.exports = {
-  init: function (conf) {
+  init: function (conf, isWPforPug) {
     console.log('\nGetting starter files... ' + emoji.get('runner'));
-    build(conf);
+    build(conf, isWPforPug);
   },
   emoji: emoji
 }

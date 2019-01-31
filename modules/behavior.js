@@ -117,7 +117,7 @@ function finish() {
 function build(conf, isWPforPug) {
   return new Promise((resolve, reject) => {
 
-    // define source path for WprdPress projects or clean frontend projects (isWP_Path)
+    // define source path for WordPress projects or clean frontend projects (isWP_Path)
     let isWP_Path = isWPforPug == 'WordPress-With-Pug' ? 'assets' : 'src';
 
     let chain = Promise.resolve();

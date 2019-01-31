@@ -165,7 +165,7 @@ module.exports = () => {
               break;
           }
 
-          behavior.init(config);
+          behavior.init(config, isWPforPug);
         })
         .catch(e => {
           console.log(e);

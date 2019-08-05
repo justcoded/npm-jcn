@@ -1,4 +1,4 @@
-[![Web Starter Kit](https://cloud.githubusercontent.com/assets/25930200/24800100/4fb5c49e-1ba7-11e7-982f-578699121d9b.png)](https://github.com/justcoded/npm-jcn/releases)
+[![Web Starter Kit](https://user-images.githubusercontent.com/32138684/62466371-d3096b80-b799-11e9-8c96-2ae7d3173116.png)](https://github.com/justcoded/npm-jcn/releases)
 
 
 
@@ -55,4 +55,4 @@ Contributions, questions and comments are all welcome and encouraged. For code c
 
 The MIT License (MIT)
 
-Copyright (c) 2018 JustCoded the IP provided on other devices on your network
+Copyright (c) 2019 JustCoded the IP provided on other devices on your network

@@ -13,10 +13,6 @@ if (noEmoji) {
 }
 
 let config = {},
-  configClass = require('./config')({
-    fs: fs,
-    del: del
-  }),
   git = require('./git')({
     folderExists: folderExists,
     logComplete: logComplete,
@@ -26,10 +22,6 @@ let config = {},
   dependencies = require('./dependencies')({
     errorMessage: errorMessage,
     logComplete: logComplete,
-    fs: fs
-  }),
-  vendor = require('./vendor')({
-    errorMessage: errorMessage,
     fs: fs
   });
 
@@ -114,11 +106,11 @@ function finish() {
  * @function
  * @param {Object} conf - Information about git repositary and paths to files to delete
  */
-function build(conf, isWPforPug) {
+function build(conf) {
   return new Promise((resolve, reject) => {
 
     // define source path for WordPress projects or clean frontend projects (isWP_Path)
-    let isWP_Path = isWPforPug == 'WordPress-With-Pug' ? 'assets' : 'src';
+    //let isWP_Path = isWPforPug == 'WordPress-With-Pug' ? 'assets' : 'src';
 
     let chain = Promise.resolve();
 
@@ -145,20 +137,6 @@ function build(conf, isWPforPug) {
         chain = chain
           .then(() => {
             return new Promise((resolve, reject) => {
-              configClass.readConfigFile()
-                .then(res => {
-                  config = res;
-                  resolve();
-                }).catch(e => {
-                  errorMessage(e);
-                  reject();
-                });
-            });
-          }).catch(e => {
-            errorMessage(e);
-          })
-          .then(() => {
-            return new Promise((resolve, reject) => {
               dependencies.configurePackageJson(config)
                 .then(resolve).catch(e => {
                   errorMessage(e);
@@ -167,32 +145,6 @@ function build(conf, isWPforPug) {
           }).catch(e => {
             errorMessage(e);
           })
-          .then(() => {
-            return new Promise((resolve, reject) => {
-              vendor.changeVendor({
-                  config: config,
-                  path: './'+isWP_Path+'/vendor_entries/vendor.scss',
-                  addVendor: vendor.addVendorScss,
-                  deleteVendor: vendor.deleteVendorScss
-                })
-                .then(resolve);
-            });
-          }).catch(e => {
-            errorMessage(e);
-          })
-          .then(() => {
-            return new Promise((resolve, reject) => {
-              vendor.changeVendor({
-                  config: config,
-                  path: './'+isWP_Path+'/vendor_entries/vendor.js',
-                  addVendor: vendor.addVendorJs,
-                  deleteVendor: vendor.deleteVendorJs
-                })
-                .then(resolve);
-            });
-          }).catch(e => {
-            errorMessage(e);
-          });
       }
 
       // If the last call install node modules and run gulp
@@ -218,9 +170,9 @@ function build(conf, isWPforPug) {
  * @param {Object} module.emoji - Emoji module
  */
 module.exports = {
-  init: function (conf, isWPforPug) {
+  init: function (conf) {
     console.log('\nGetting starter files... ' + emoji.get('runner'));
-    build(conf, isWPforPug);
+    build(conf);
   },
   emoji: emoji
-}
+};

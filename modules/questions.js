@@ -1,6 +1,7 @@
 'use strict';
 
-const inquirer = require('inquirer'),
+const behavior = require('./behavior'),
+  inquirer = require('inquirer'),
   isWindows = /^win/.test(process.platform),
   defaultGit = 'https://github.com/justcoded/web-starter-kit.git';
 
@@ -68,5 +69,13 @@ module.exports = () => {
       });
     });
   }
+
+  projectType()
+    .then(() => {
+      behavior.init(config);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 
 };

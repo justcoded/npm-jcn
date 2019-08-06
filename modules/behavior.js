@@ -1,12 +1,12 @@
 'use strict';
 
 const colors = require('colors'),
-  shell = require('shelljs/global'),
-  fs = require('fs'),
-  emoji = require('node-emoji'),
-  del = require('del'),
-  copydir = require('copy-dir'),
-  noEmoji = /^win/.test(process.platform);
+      shell = require('shelljs/global'),
+      fs = require('fs'),
+      emoji = require('node-emoji'),
+      del = require('del'),
+      copydir = require('copy-dir'),
+      noEmoji = /^win/.test(process.platform);
 
 if (noEmoji) {
   emoji.get = () => '';
@@ -110,7 +110,6 @@ function build(conf) {
   return new Promise((resolve, reject) => {
 
     // define source path for WordPress projects or clean frontend projects (isWP_Path)
-    //let isWP_Path = isWPforPug == 'WordPress-With-Pug' ? 'assets' : 'src';
 
     let chain = Promise.resolve();
 

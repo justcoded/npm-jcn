@@ -1,4 +1,4 @@
-[![Web Starter Kit](https://user-images.githubusercontent.com/32138684/62466371-d3096b80-b799-11e9-8c96-2ae7d3173116.png)](https://github.com/justcoded/npm-jcn/releases)
+[![Web Starter Kit](https://user-images.githubusercontent.com/25930200/63020467-df32ae80-bea6-11e9-968b-4bc5119a7a09.jpg)](https://github.com/justcoded/npm-jcn/releases)
 
 
 

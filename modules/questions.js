@@ -4,6 +4,7 @@ const behavior = require('./behavior'),
   inquirer = require('inquirer'),
   isWindows = /^win/.test(process.platform),
   defaultGit = 'https://github.com/justcoded/web-starter-kit.git';
+  defaultGitWP = 'https://github.com/justcoded/web-starter-kit-wp.git';
 
 let config = [];
 
@@ -56,8 +57,8 @@ module.exports = () => {
             break;
           case 'WordPress':
             config.push({
-              url: defaultGit,
-              branch: 'WordPress-Gulp' // Gulp+WP branch
+              url: defaultGitWP,
+              branch: 'master' // Gulp+WP branch
             });
 
             break;
